@@ -1,0 +1,25 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <div class="container">
+    <h1>任务管理</h1>
+    <h3>示例1</h3>
+    <input type="button" value="点击" class="btn btn-primary" onclick="clickMe();">
+    </div>
+{% endblock %}
+{% block js %}
+    <script type="text/javascript">
+    function clickMe() {
+        $.ajax({
+            url: '/task/ajax/',
+            type: 'GET',
+            data:{
+                n1:123,
+                n2:456
+            },
+            success: function(res){
+                console.log(res);
+            }
+        })
+    }
+    </script>
+{% endblock %}
