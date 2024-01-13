@@ -1,0 +1,100 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static "plugins/bootstrap-datepicker/css/bootstrap-datepicker.css" %}"/>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    新建用户
+                </h3>
+            </div>
+            <div class="panel-body">
+                <form action="/user/add/" method="post">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>姓&#12288&#12288名</label>
+                                <input type="text" class="" placeholder="姓名" name="username"/>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>密&#12288&#12288码</label>
+                                <input type="password" class="" placeholder="密码" name="password"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>年&#12288&#12288龄</label>
+                                <input type="text" class="" placeholder="年龄" name="age"/>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>账户余额</label>
+                                <input type="text" class="" placeholder="账户余额" name="account"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>入职时间</label>
+                                <input type="text" class="" placeholder="格式2000-00-00" name="create_time"/>
+                            </div>
+                        </div>
+                        <div class="col-md-6"></div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>性&#12288&#12288别</label>
+                            <select class="form-control" name="gender">
+                                {% for item in gender_choices %}
+                                    <option value="{{ item.0 }}">{{ item.1 }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>部&#12288&#12288门</label>
+                            <select class="form-control" name="depart">
+                                {% for item in depart_list %}
+                                    <option value="{{ item.id }}">{{ item.title }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button type="submit" class="btn btn-primary">保存</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script src="{% static "plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js" %}"></script>
+    <script src="{% static "plugins/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js" %}"></script>
+    <script>
+        $(function () {
+            $("#id_create_time").datepicker({
+                autoclose: true,
+                format: 'yyyy-mm-dd',
+                startDate: 0,
+                language: "zh-CN"
+            });
+        });
+    </script>
+{% endblock %}

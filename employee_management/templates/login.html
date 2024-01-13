@@ -1,0 +1,49 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block css %}
+    <style>
+        .c1 {
+
+            width: 350px;
+            margin-top: 50px;
+            border: 1px solid #dddddd;
+            padding: 10px 20px 10px 20px;
+            border-radius: 5px;
+            box-shadow: 5px 5px 5px #aaa;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+    <div class="container c1 clearfix">
+        <h2 style="text-align: center">管理员登录</h2>
+        <form method='POST' novalidate>
+            {% csrf_token %}
+            <div class="form-group">
+                <label>用户名</label>
+                {{ form.username }}
+                <span style="color: red;">{{ form.errors.username.0 }}</span>
+            </div>
+            <div class="form-group">
+                <label>密码</label>
+                {{ form.password }}
+                <span style="color: red;">{{ form.errors.password.0 }}</span>
+            </div>
+            <div class="form-group">
+                <label for="id_code">图片验证码</label>
+                <div class="row">
+                    <div class="col-xs-7">
+                        {{ form.code }}
+                        <span style="color: red;">{{ form.errors.code.0 }}</span>
+                    </div>
+                    <div class="col-xs-5">
+                        <img src="/image/code/" alt="" id="image_code"
+                             onclick="this.setAttribute('src','/image/code/?random='+Math.random())">
+
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-success center-block" style="width: 100px">Submit</button>
+
+        </form>
+    </div>
+{% endblock %}
