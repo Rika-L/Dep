@@ -1,25 +1,71 @@
 {% extends 'layout.html' %}
 {% block content %}
     <div class="container">
-    <h1>任务管理</h1>
-    <h3>示例1</h3>
-    <input type="button" value="点击" class="btn btn-primary" onclick="clickMe();">
+        <div class="panel panel-default">
+            <div class="panel-heading">表单</div>
+            <div class="panel-body">
+                <form id="formAdd" novalidate>
+                    <div class="clearfix">
+                        {% for filed in form %}
+                            <div class="col-xs-6">
+                                <div class="form-group" style="position: relative;margin-bottom: 20px">
+                                    <label>
+                                        {{ filed.label }}
+                                    </label>
+                                    {{ filed }}
+                                    <span class="error-msg" style="color:red; position: absolute"></span>
+                                </div>
+                            </div>
+                        {% endfor %}
+                        <div class="col-xs-6">
+                            <button id='btnAdd' type="button" class="btn btn-primary">保存</button>
+                        </div>
+                    </div>
+                    <div class="row">
+
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
+
 {% endblock %}
 {% block js %}
     <script type="text/javascript">
-    function clickMe() {
-        $.ajax({
-            url: '/task/ajax/',
-            type: 'GET',
-            data:{
-                n1:123,
-                n2:456
-            },
-            success: function(res){
-                console.log(res);
+
+        $(
+            function () {
+                //页面框架加载完成后代码自动执行
+                bindBtnAddEvent();
             }
-        })
-    }
+        )
+
+
+        function bindBtnAddEvent() {
+            $('#btnAdd').click(function () {
+                
+                $('.error-msg').empty();
+                
+                $.ajax({
+                    url: '/task/add/',
+                    type: 'post',
+                    data: $('#formAdd').serialize(),
+                    dataType: 'JSON',
+                    success: function (res) {
+                        console.log(res);
+                        console.log(res.status);
+                        console.log(res.data);
+                        if (res.status) {
+                            alert('添加成功')
+                        } else {
+                            $.each(res.error, function (name, data) {
+                                // console.log(name, data);
+                                $('#id_' + name).next().text(data[0]);
+                            })
+                        }
+                    }
+                })
+            })
+        }
     </script>
 {% endblock %}
