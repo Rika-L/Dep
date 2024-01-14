@@ -67,3 +67,16 @@ class Task(models.Model):
     title = models.CharField(verbose_name='标题', max_length=64)
     detail = models.TextField(verbose_name='详细信息')
     user = models.ForeignKey(verbose_name='负责人', to='Admin', on_delete=models.CASCADE)
+
+
+class Order(models.Model):
+    """订单"""
+    oid = models.CharField(verbose_name='订单号', max_length=64)
+    title = models.CharField(verbose_name='名称', max_length=32)
+    price = models.IntegerField(verbose_name='价格')
+    status_choices = (
+        (1, '待支付'),
+        (2, '已支付'),
+    )
+    status = models.SmallIntegerField(verbose_name='状态', choices=status_choices)
+    admin = models.ForeignKey(verbose_name='管理员', to='Admin', on_delete=models.CASCADE)
